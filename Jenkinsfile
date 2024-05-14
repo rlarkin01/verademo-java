@@ -3,7 +3,11 @@
 //
 
 pipeline {
-    agent any
+    agent {
+        docker {
+          image 'python:3'
+        }
+    }
 
     environment {
         VERACODE_APP_NAME = 'Verademo'      // App Name in the Veracode Platform
@@ -128,6 +132,7 @@ pipeline {
                   usernamePassword(credentialsId: 'veracode_login', passwordVariable: 'VeraPW', usernameVariable: 'VeraID'),
                   usernamePassword(credentialsId: 'dynamic_login', passwordVariable: 'Dynamic_Pass', usernameVariable: 'Dynamic_User')
                ]){
+                  sh 'pip3 install requests'
                   sh 'python3 "$WORKSPACE/jenkins-create-da-scan.py"'           
                }
             }
