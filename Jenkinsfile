@@ -110,5 +110,27 @@ pipeline {
                     }
             }
         }
+
+
+        stage ('Deploy') {
+            steps {
+                echo 'Mock deployment process of app here...'
+            }
+        }
+
+
+        stage('Veracode DAST'){
+            environment {
+                Dyanamic_Target='http://verademo.rlarkin.vuln.sa.veracode.io/verademo'
+            }
+            steps {
+               withCredentials([
+                  usernamePassword(credentialsId: 'veracode_login', passwordVariable: 'VeraPW', usernameVariable: 'VeraID'),
+                  usernamePassword(credentialsId: 'dynamic_login', passwordVariable: 'Dynamic_Pass', usernameVariable: 'Dynamic_User')
+               ]){
+                  sh 'python3 "$WORKSPACE/jenkins-create-da-scan.py"'           
+               }
+            }
+        }
     }
 }
