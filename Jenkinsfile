@@ -3,12 +3,8 @@
 //
 
 pipeline {
-    agent {
-        docker {
-          image 'python:3'
-        }
-    }
-
+    agent any
+    
     environment {
         VERACODE_APP_NAME = 'Verademo'      // App Name in the Veracode Platform
     }
