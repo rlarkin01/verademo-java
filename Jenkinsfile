@@ -42,10 +42,9 @@ pipeline {
         }
 
         stage ('Veracode scan') {
-            withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-                steps {
-    
-                    echo 'Veracode scanning'
+            steps {
+                echo 'Veracode scanning'
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     withCredentials([ usernamePassword ( 
                         credentialsId: 'veracode_login_fed', usernameVariable: 'VERACODEID', passwordVariable: 'VERACODEKEY') ]) {
     
