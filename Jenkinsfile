@@ -47,11 +47,13 @@ pipeline {
                 // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     withCredentials([ usernamePassword ( 
                         credentialsId: 'veracode_login_fed', usernameVariable: 'VERACODEID', passwordVariable: 'VERACODEKEY') ]) {
-    
-                        sh '''
-                          curl -s -o veracodeJavaAPI.jar https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/20.8.7.1/vosp-api-wrappers-java-20.8.7.1.jar
-                          java -jar veracodeJavaAPI.jar -vid $VERACODEID -vkey $VERACODEKEY -action UploadAndScan -appname 'rlarkin01/verademo' -createprofile true -autoscan true -filepath target/verademo.war -version env.BUILD_NUMBER -scantimeout 60 -criticality 'High'
-                       '''
+
+                        sh 'echo foo $VERACODEID'
+                        
+                       //  sh '''
+                       //    curl -s -o veracodeJavaAPI.jar https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/20.8.7.1/vosp-api-wrappers-java-20.8.7.1.jar
+                       //    java -jar veracodeJavaAPI.jar -vid $VERACODEID -vkey $VERACODEKEY -action UploadAndScan -appname 'rlarkin01/verademo' -createprofile true -autoscan true -filepath target/verademo.war -version env.BUILD_NUMBER -scantimeout 60 -criticality 'High'
+                       // '''
     
                     }      
                 // }
